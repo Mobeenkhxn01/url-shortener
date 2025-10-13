@@ -2,6 +2,7 @@
 
 import UrlShortenForm from "@/components/url-shorten-form";
 import UrlList from "@/components/url-shorten-list";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -65,12 +66,12 @@ export default function Home() {
 
       <footer className="w-full border-t py-8 text-center text-gray-500 text-sm">
         <div className="space-x-4 mb-2">
-          <a href="/privacy" className="hover:text-indigo-600">Privacy</a>
-          <a href="/terms" className="hover:text-indigo-600">Terms</a>
-          <a href="/contact" className="hover:text-indigo-600">Contact</a>
+          <Link href="/privacy" className="hover:text-indigo-600">Privacy</Link>
+          <Link href="/terms" className="hover:text-indigo-600">Terms</Link>
+          <Link href="/contact" className="hover:text-indigo-600">Contact</Link>
         </div>
         <p>© {new Date().getFullYear()} Shortify — Made with ❤️ by 
-          <a href="https://github.com/Mobeenkhxn01" className="text-indigo-600 hover:underline ml-1">Mobeen Khan</a>
+          <Link href="https://github.com/Mobeenkhxn01" className="text-indigo-600 hover:underline ml-1">Mobeen Khan</Link>
         </p>
       </footer>
     </main>
