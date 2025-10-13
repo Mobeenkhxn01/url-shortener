@@ -6,7 +6,7 @@ export default function UrlShortener() {
   return (
     <div>
       <UrlShortenForm />
-      <UrlList />
+      <UrlList/>
     </div>
   );
 }

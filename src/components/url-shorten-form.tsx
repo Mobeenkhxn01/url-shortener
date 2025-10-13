@@ -1,28 +1,40 @@
 "use client";
-import {useState} from "react";
+import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 export default function UrlShortenForm() {
-   const [url, setUrl] = useState<string>('');
+  const [url, setUrl] = useState<string>("");
 
-   const handleSubmit = (e: React.FormEvent) => {
-     e.preventDefault();
-     // Handle form submission logic here
-     console.log(url);
-   }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/shorten", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      await response.json();
+      setUrl("");
+    } catch (err) {
+      console.error("Error shortening the URL:", err);
+    } finally {
+    }
+  };
   return (
     <form onSubmit={handleSubmit} className="mb-4">
       <div className="space-y-4">
         <Input
-        value={url}
+          value={url}
           className="h-12"
           type="url"
-          onChange={(e)=>setUrl(e.target.value)}
+          onChange={(e) => setUrl(e.target.value)}
           placeholder="Enter Url to shorten"
           required
         />
-        <Button className="w-full p-2" type="submit">Shorten URL</Button>
+        <Button className="w-full p-2" type="submit">
+          Shorten URL
+        </Button>
       </div>
     </form>
   );
