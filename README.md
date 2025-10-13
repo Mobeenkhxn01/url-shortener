@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Sure! Here's a professional and clear **README.md** for your simple URL shortener project, keeping it concise and easy to understand, without mentioning ads or Bit.ly comparison:
+
+````markdown
+# Simple URL Shortener 🚀
+
+A fast and secure URL shortening web application built with **Next.js**, **TypeScript**, and **Prisma**. This project allows users to shorten long URLs into short, easy-to-share links and track their usage.
+
+## Features
+
+- Shorten long URLs into short, memorable links.
+- Track the number of times a URL has been visited.
+- Real-time URL creation and access.
+- Clean and modern UI with Tailwind CSS.
+- Fully responsive design.
+
+## Tech Stack
+
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS  
+- **Backend:** Next.js API Routes, Node.js  
+- **Database:** Prisma ORM, MongoDB / PostgreSQL (configurable)  
+- **Utilities:** nanoid (for unique short codes)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js v18+  
+- npm or yarn  
+- Database (MongoDB or PostgreSQL)
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Mobeenkhxn01/url-shortener.git
+cd simple-url-shortener
+````
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+
+Create a `.env` file in the root directory:
+
+```env
+DATABASE_URL=your_database_url
+NEXT_PUBLIC_BASE_URL=https://shrt-rho.vercel.app
+```
+
+4. Run Prisma migrations:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+5. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [https://shrt-rho.vercel.app](https://shrt-rho.vercel.app) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* `POST /api/shorten` – Shortens a given URL and returns a short code.
+* `GET /api/urls` – Returns a list of recently created URLs and their visit counts.
+* `GET /:short` – Redirects the user to the original URL and increments the visit count.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Enter a long URL in the input box on the homepage.
+2. Click **Shorten URL**.
+3. Copy the generated short link and share it.
+4. The app tracks the number of visits for each URL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Screenshots
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Homepage Screenshot](./screenshots/homepage.png)
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Feel free to submit issues or pull requests for improvements.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Made with ❤️ by [Mobeen Khan](https://github.com/Mobeenkhxn01)
+
+```

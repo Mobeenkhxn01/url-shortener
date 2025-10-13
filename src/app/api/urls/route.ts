@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function GET() {
   try {
+    // Get sessionId from cookies
+    const sessionId = (await cookies()).get("sessionId")?.value;
+    if (!sessionId) return NextResponse.json([]);
+
+    // Fetch only URLs created by this session
     const urls = await prisma.url.findMany({
-      take: 5,
+      where: { sessionId },
       orderBy: { createdAt: "desc" },
       select: { original: true, short: true, visits: true },
     });
