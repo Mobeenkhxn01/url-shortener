@@ -1,102 +1,226 @@
-Sure! Here's a professional and clear **README.md** for your simple URL shortener project, keeping it concise and easy to understand, without mentioning ads or Bit.ly comparison:
-
-````markdown
 # Simple URL Shortener 🚀
 
-A fast and secure URL shortening web application built with **Next.js**, **TypeScript**, and **Prisma**. This project allows users to shorten long URLs into short, easy-to-share links and track their usage.
+A fast and lightweight URL shortening web application built with **Next.js 15**, **TypeScript**, **Prisma ORM**, and **shadcn/ui**. Shorten long URLs instantly and track click statistics in real-time.
 
 ## Features
 
-- Shorten long URLs into short, memorable links.
-- Track the number of times a URL has been visited.
-- Real-time URL creation and access.
-- Clean and modern UI with Tailwind CSS.
-- Fully responsive design.
+- ⚡ **Instant URL Shortening** - Shorten URLs in less than 2 seconds
+- 📊 **Click Tracking** - Monitor how many times each link is clicked
+- 🔗 **Copy to Clipboard** - One-click copy functionality
+- 📱 **Fully Responsive** - Works seamlessly on desktop, tablet, and mobile
+- 🎨 **Modern UI** - Clean interface built with Tailwind CSS and shadcn/ui
+- 🔐 **Secure** - HTTPS encrypted, no account required
+- ⚙️ **Session-based** - URLs are filtered per session
 
 ## Tech Stack
 
-- **Frontend:** Next.js, React, TypeScript, Tailwind CSS  
-- **Backend:** Next.js API Routes, Node.js  
-- **Database:** Prisma ORM, MongoDB / PostgreSQL (configurable)  
-- **Utilities:** nanoid (for unique short codes)
+- **Frontend:** Next.js 15+, React, TypeScript, Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Backend:** Next.js API Routes
+- **Database:** Prisma ORM + PostgreSQL (Neon DB)
+- **Icons:** Lucide React
+- **Notifications:** React Hot Toast
+- **Hosting:** Vercel
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js v18+  
-- npm or yarn  
-- Database (MongoDB or PostgreSQL)
+- Node.js v18 or higher
+- npm or yarn package manager
+- PostgreSQL database (Neon DB recommended for free hosting)
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
 ```bash
 git clone https://github.com/Mobeenkhxn01/url-shortener.git
-cd simple-url-shortener
-````
+cd url-shortener
+```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
-3. Set up environment variables:
+3. **Set up environment variables:**
 
-Create a `.env` file in the root directory:
+Create a `.env.local` file in the root directory:
 
 ```env
-DATABASE_URL=your_database_url
-NEXT_PUBLIC_BASE_URL=https://shrt-rho.vercel.app
+DATABASE_URL="postgresql://user:password@host/database"
+NEXT_PUBLIC_BASE_URL="https://your-domain.vercel.app"
 ```
 
-4. Run Prisma migrations:
+**To get a free PostgreSQL database:**
+- Visit [Neon DB](https://neon.tech)
+- Create a free account and project
+- Copy your connection string to `DATABASE_URL`
+
+4. **Set up the database:**
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-5. Start the development server:
+5. **Generate Prisma client:**
+
+```bash
+npx prisma generate
+```
+
+6. **Start the development server:**
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [https://shrt-rho.vercel.app](https://shrt-rho.vercel.app) to view the app.
-
-## API Endpoints
-
-* `POST /api/shorten` – Shortens a given URL and returns a short code.
-* `GET /api/urls` – Returns a list of recently created URLs and their visit counts.
-* `GET /:short` – Redirects the user to the original URL and increments the visit count.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Usage
 
-1. Enter a long URL in the input box on the homepage.
-2. Click **Shorten URL**.
-3. Copy the generated short link and share it.
-4. The app tracks the number of visits for each URL.
+1. Enter a long URL in the input field on the homepage
+2. Click **"Shorten URL"** button
+3. Your short URL appears in the list below
+4. Click the **copy icon** to copy the short link to clipboard
+5. Share the short URL anywhere - it will redirect to your original link
+6. Monitor **click count** next to each shortened URL
 
-## Screenshots
+## Project Structure
 
-![Homepage Screenshot](./screenshots/homepage.png)
+```
+src/
+├── app/
+│   ├── page.tsx              # Homepage
+│   ├── layout.tsx            # Root layout
+│   ├── globals.css           # Global styles
+│   └── api/
+│       ├── shorten/          # POST endpoint to shorten URLs
+│       └── urls/             # GET endpoint to fetch URLs
+├── components/
+│   ├── url-shorten-form.tsx  # Input form component
+│   ├── url-shorten-list.tsx  # URLs list component
+│   └── ui/                   # shadcn/ui components
+└── lib/
+    └── db.ts                 # Prisma client
+prisma/
+├── schema.prisma             # Database schema
+└── migrations/               # Database migrations
+```
+
+## API Endpoints
+
+### Shorten URL
+
+**POST** `/api/shorten`
+
+Request:
+```json
+{
+  "url": "https://example.com/very/long/url/path"
+}
+```
+
+Response:
+```json
+{
+  "id": "abc123",
+  "originalUrl": "https://example.com/very/long/url/path",
+  "shortUrl": "https://your-domain.vercel.app/abc123",
+  "views": 0
+}
+```
+
+### Get All URLs
+
+**GET** `/api/urls`
+
+Response:
+```json
+[
+  {
+    "originalUrl": "https://example.com/...",
+    "shortUrl": "https://your-domain.vercel.app/abc123",
+    "views": 5
+  }
+]
+```
+
+### Redirect
+
+**GET** `/:shortCode`
+
+Redirects to the original URL and increments the view count.
+
+## Database Schema
+
+```prisma
+model Url {
+  id           String   @id @default(cuid())
+  originalUrl  String
+  shortCode    String   @unique
+  views        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+```
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Visit [Vercel](https://vercel.com)
+3. Click **"New Project"** and select your repository
+4. Add environment variables:
+   - `DATABASE_URL` - Your Neon DB connection string
+   - `NEXT_PUBLIC_BASE_URL` - Your Vercel domain
+5. Click **"Deploy"**
+
+Or use the Vercel CLI:
+
+```bash
+npm install -g vercel
+vercel
+```
+
+## Development
+
+### Run tests
+
+```bash
+npm run test
+```
+
+### Build for production
+
+```bash
+npm run build
+npm start
+```
+
+### View database in Prisma Studio
+
+```bash
+npx prisma studio
+```
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit issues or pull requests for improvements.
+Contributions are welcome! Feel free to submit issues or pull requests.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License - feel free to use this project for personal or commercial purposes.
+
+## Support & Questions
+
+- 📧 Email: [developermobeen7@gmail.com]
+- 🐛 Issues: [GitHub Issues](https://github.com/Mobeenkhxn01/url-shortener/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/Mobeenkhxn01/url-shortener/discussions)
 
 ---
 
 Made with ❤️ by [Mobeen Khan](https://github.com/Mobeenkhxn01)
-
-```
