@@ -11,17 +11,15 @@ export async function POST(req: NextRequest) {
     if (!originalUrl || typeof originalUrl !== "string") {
       return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
     }
-
-    // Get or create a sessionId
     const cookieStore = cookies();
     let sessionId = (await cookieStore).get("sessionId")?.value;
 
     if (!sessionId) {
-      sessionId = nanoid(); // generate new session ID
+      sessionId = nanoid();
       (await cookieStore).set("sessionId", sessionId, { path: "/", maxAge: 60 * 60 * 24 * 30 }); // 30 days
     }
 
-    const shortCode = nanoid(8);
+    const shortCode = nanoid(5);
 
     const shortenUrl = await prisma.url.create({
       data: {
