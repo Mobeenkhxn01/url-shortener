@@ -1,16 +1,38 @@
 generator client {
-  provider = "prisma-client-js"
-}
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
-model Url{
-  id        Int      @id @default(autoincrement())
-  original  String   
+datasource db {
+  provider = "postgresql"
+}
+
+model Url {
+  id        String   @id @default(cuid())
+  original  String
   short     String   @unique
-  visits   Int      @default(0)
+  visits    Int      @default(0)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   sessionId String?
+  title     String?
+  expiresAt DateTime?
+
+  clicks    Click[]
+
+  @@index([short])
+  @@index([sessionId])
+}
+
+model Click {
+  id        String   @id @default(cuid())
+  urlId     String
+  clickedAt DateTime @default(now())
+  country   String?
+  device    String?
+  referrer  String?
+
+  url Url @relation(fields: [urlId], references: [id], onDelete: Cascade)
+
+  @@index([urlId])
 }

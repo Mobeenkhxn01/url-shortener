@@ -1,0 +1,6 @@
+{
+  "/[short]/page": "app/[short]/page.js",
+  "/api/shorten/route": "app/api/shorten/route.js",
+  "/api/urls/route": "app/api/urls/route.js",
+  "/page": "app/page.js"
+}

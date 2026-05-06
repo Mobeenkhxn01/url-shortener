@@ -1,0 +1,8 @@
+{
+  "/[short]/page": "app/[short]/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/shorten/route": "app/api/shorten/route.js",
+  "/api/urls/route": "app/api/urls/route.js",
+  "/page": "app/page.js"
+}
